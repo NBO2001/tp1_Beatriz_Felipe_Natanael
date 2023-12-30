@@ -57,7 +57,7 @@ sql_question_b = """
 SELECT p2.product_id, p2.asin, p2.title, p2.salesrank
 FROM products p1
 JOIN productproduct pp ON pp.product_id_fk = p1.product_id
-JOIN products p2 ON p2.asin = pp.referenc_asin
+JOIN products p2 ON p2.asin = pp.reference_asin
 WHERE p1.product_id = %s AND p2.salesrank < p1.salesrank
 order by p2.salesrank;
 """

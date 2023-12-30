@@ -309,7 +309,8 @@ products_category = """
 product_product = """
  CREATE TABLE IF NOT EXISTS ProductProduct (
     product_id_fk INTEGER NOT NULL,
-    referenc_asin VARCHAR(50) NOT NULL,
+    reference_asin CHAR(10) NOT NULL,
+    PRIMARY KEY (product_id_fk, reference_asin),
     FOREIGN KEY (product_id_fk) REFERENCES products (product_id) ON DELETE CASCADE
  )
 """
