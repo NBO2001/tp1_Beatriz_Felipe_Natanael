@@ -1,8 +1,6 @@
 import os
-import gdown
 import psycopg2
 import re
-from tqdm import tqdm
 
 
 class Config:
@@ -18,13 +16,8 @@ class Config:
         for file, id in files:
 
             if not os.path.exists(file):
-                self.__download_drive(id,file)
-
-    def __download_drive(self, id_val, output):
-
-        url = "https://drive.google.com/uc?id="
-        full_url = f"{url}{id_val}"
-        gdown.download(full_url, output=output)         
+                print(f"File {file} not exists")
+    
 
 
 class Connect:
@@ -52,6 +45,7 @@ class Connect:
                         results = curs.fetchall()
                     
         except psycopg2.Error as e:
+            print(curs.query.decode("utf-8").strip())
             print(f"ERROR: {e}")
 
         finally:
@@ -76,12 +70,12 @@ class Category:
 
         if len(result) != 0:
             
-            if len(result) == 2:
-                name, id = result
+            if len(result) >= 2:
+                id = result.pop()
                 id = int(id)
 
                 self.category_id  = id
-                self.category_name = name
+                self.category_name = " ".join(result)
             else:
                 try:
                     self.category_id  = int(result[0])
@@ -263,7 +257,7 @@ products = """
 CREATE TABLE IF NOT EXISTS products (
     product_id INTEGER NOT NULL,
     asin CHAR(10) NOT NULL UNIQUE,
-    title VARCHAR(255),
+    title VARCHAR(300),
     salesrank BIGINT,
     total_reviews INTEGER,
     group_id_fK INTEGER,
@@ -361,7 +355,7 @@ def addDatabase(item: Item):
         connect.exec_query(query=[group_insert_sql, (item.group, )])
 
 
-    connect.exec_query(query=[product_insert_sql, (item.id, item.asin, item.title, item.salesrank, item.reviews[0], item.group)])
+    connect.exec_query(query=[product_insert_sql, (item.id, item.asin, item.title, item.salesrank, item.reviews[0], item.group)], debugger=True)
 
     if item.reviews[1]:
 
@@ -388,19 +382,12 @@ def addDatabase(item: Item):
             for simi in list_sims:
                 connect.exec_query(query=[productproduct_insert_sql, (item.id, simi)])        
 
-elements = []
-
 def insert_memory(item: Item):
     if not item.title:
         return
     
-    elements.append(item)
-
+    addDatabase(item)
 
 readFile(filename=path_file, callback=insert_memory)
-
-
-for element in tqdm(elements, desc="Insert Elements"):
-    addDatabase(element)
 
 connect.close()
