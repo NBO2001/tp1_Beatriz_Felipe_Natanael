@@ -4,8 +4,10 @@ import re
 
 
 class Config:
+    
 
     def __init__(self) -> None:
+        self.Error = False
         self.__downloads()
 
     
@@ -16,6 +18,7 @@ class Config:
         for file, id in files:
 
             if not os.path.exists(file):
+                self.Error = True
                 print(f"File {file} not exists")
     
 
@@ -243,6 +246,7 @@ conf = Config()
 
 path_file = "./downloads/amazon-meta.txt"
 
+
 connect = Connect()
 
 
@@ -347,7 +351,7 @@ def addDatabase(item: Item):
     """
 
     productproduct_insert_sql = """
-    INSERT INTO productproduct (product_id_fk, referenc_asin)
+    INSERT INTO productproduct (product_id_fk, reference_asin)
     VALUES (%s,  %s)
     """
     
@@ -389,6 +393,7 @@ def insert_memory(item: Item):
     
     addDatabase(item)
 
-readFile(filename=path_file, callback=insert_memory)
+if not conf.Error:
+    readFile(filename=path_file, callback=insert_memory)
 
 connect.close()
