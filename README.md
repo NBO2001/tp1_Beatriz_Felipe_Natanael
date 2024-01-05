@@ -46,7 +46,7 @@ LIMIT 5)
 SELECT p2.product_id, p2.asin, p2.title, p2.salesrank
 FROM products p1
 JOIN productproduct pp ON pp.product_id_fk = p1.product_id
-JOIN products p2 ON p2.asin = pp.referenc_asin
+JOIN products p2 ON p2.asin = pp.reference_asin
 WHERE p1.product_id = %s AND p2.salesrank < p1.salesrank
 order by p2.salesrank;
 
@@ -113,54 +113,59 @@ WHERE group_index <= 10;
 -> Saida
 | product_id | title | salesrank | group |
 | ---------- | ----- | --------- | ----- |
-| 296 | The Da Vinci Code | 19 | Book |
-| 390452 | Sisterhood of the Traveling Pants (Sisterhood of Traveling Pants) | 21 | Book |
-| 89000 | The Tipping Point: How Little Things Can Make a Big Difference | 23 | Book |
-| 337971 | The Secret Life of Bees | 26 | Book |
-| 154855 | Good to Great: Why Some Companies Make the Leap... and Others Don't | 29 | Book |
-| 376858 | Angels & Demons | 31 | Book |
-| 312527 | The Purpose-Driven Life: What on Earth Am I Here For? | 32 | Book |
-| 162283 | Rich Dad, Poor Dad: What the Rich Teach Their Kids About Money--That the Poor and Middle Class Do Not! | 37 | Book |
-| 11638 | The South Beach Diet: The Delicious, Doctor-Designed, Foolproof Plan for Fast and Healthy Weight Loss | 38 | Book |
-| 62424 | Life of Pi | 42 | Book |
+| 548514 | Help Me Talk Right: How to Teach a Child to Say the "R" Sound in 15 Easy Lessons | 0 | Book |
+| 548521 | Michelin the Green Guide Berlin and Potsdam (Michelin Green Guide: Berlin and Potsdam) | 0 | Book |
+| 548520 | The Diligent: A Voyage through the Worlds of the Slave Trade | 0 | Book |
+| 548519 | The Irish Americans: The Immigrant Experience | 0 | Book |
+| 548512 | Common Sense About Uncommon Wisdom: Ancient Teachings of Vedanta | 0 | Book |
+| 548513 | How To Get The Best Creative Work From Your Agency: Advertising, Interactive And Other Marketing Communications | 0 | Book |
+| 548518 | Dona Barbara | 0 | Book |
+| 548517 | The Manager's Bible: A Practical Guide for the Current and Future Manager | 0 | Book |
+| 548516 | El arte de amar | 0 | Book |
+| 548515 | Gods on Earth (Thor, Book 3) | 0 | Book |
+| 548545 | I Need Your Loving | 0 | Music |
+| 548536 | Improvisations - Jazz In Paris | 0 | Music |
+| 548544 | Lucky Man | 0 | Music |
+| 548551 | That Travelin' Two-Beat/Sings the Great Country Hits | 0 | Music |
 | 370604 | Buzz Buzz | 27 | Music |
+| 536884 | A Rush of Blood to the Head | 33 | Music |
+| 450096 | Michael Bublé | 42 | Music |
 | 187690 | Come Away with Me | 46 | Music |
 | 175533 | Songs About Jane | 53 | Music |
 | 124898 | Facing Future | 55 | Music |
-| 370600 | Victor Vito | 62 | Music |
-| 270546 | On And On | 68 | Music |
-| 54420 | The Beatles 1 | 69 | Music |
-| 14861 | Brushfire Fairytales | 75 | Music |
-| 327081 | "Creedence Clearwater Revival - Chronicle, Vol. 1: The 20 Greatest Hits" | 87 | Music |
-| 352312 | The Hit Singles Collection | 87 | Music |
+| 548547 | The Drifter | 0 | DVD |
+| 548548 | The House Of Morecock | 0 | DVD |
+| 548550 | 1, 2, 3 Soleils: Taha, Khaled, Faudel | 0 | DVD |
 | 193107 | Star Wars - Episode I, The Phantom Menace (Widescreen Edition) | 28 | DVD |
 | 137401 | Band of Brothers | 47 | DVD |
 | 104775 | The Little Mermaid (Limited Issue) | 49 | DVD |
+| 547782 | The Wizard of Oz | 55 | DVD |
+| 544622 | Star Wars - Episode II, Attack of the Clones (Widescreen Edition) | 85 | DVD |
 | 136839 | Fawlty Towers - The Complete Collection | 85 | DVD |
 | 7524 | Jerry Seinfeld Live on Broadway: I'm Telling You for the Last Time | 88 | DVD |
-| 369922 | Sex and the City - The Complete First Season | 102 | DVD |
-| 344171 | Pride and Prejudice (Special Edition) | 107 | DVD |
-| 213611 | The Blue Planet - Seas of Life Collector's Set (Parts 1-4) | 111 | DVD |
-| 374726 | 24 - Season Two | 119 | DVD |
-| 333747 | Sex and the City - The Complete Second Season | 133 | DVD |
+| 548526 | From Soup to Nuts | 0 | Video |
 | 297444 | The War of the Worlds | 1 | Video |
 | 28339 | Shirley Valentine | 2 | Video |
 | 113500 | Leslie Sansone - Walk Away the Pounds - Super Fat Burning | 6 | Video |
 | 334784 | Robin Hood - Men in Tights | 7 | Video |
+| 486684 | Richard Simmons - Sweatin' to the Oldies | 8 | Video |
 | 112817 | Howard the Duck | 12 | Video |
 | 385458 | Charlotte's Web | 14 | Video |
 | 347515 | A Tree Grows in Brooklyn | 16 | Video |
 | 297480 | Star Wars - Episode II, Attack of the Clones | 17 | Video |
-| 407073 | The Jungle Book | 17 | Video |
-| 161229 | My Neighbor Totoro | 17 | Video |
 | 257106 | IlluStory Book Kit | 59 | Toy |
+| 465900 | Wizard Card Game Deluxe | 1890 | Toy |
 | 305664 | Photostory Junior Book Kit | 2288 | Toy |
 | 327405 | Party Tyme Karaoke CD Oldies | 4053 | Toy |
 | 922 | Party Tyme Karaoke CD Kids Songs | 7812 | Toy |
 | 272037 | Party Tyme Karaoke CD: V2 Super Hits | 10732 | Toy |
 | 11660 | The Songs of Britney Spears & Christina Aguilera | 31296 | Toy |
+| 421292 | R- Photostory Senior | 45241 | Toy |
 | 51902 | PRIMA PUBLISHING Dark Cloud 2 Official Strategy Guide | 339 | Video Games |
+| 527037 | ClickArt Christian Publishing Suite 3 | 200 | Software |
 | 96696 | RINGDISC Wagner: The Ring Disc | 327 | Software |
+| 456958 | Zondervan Bible Study Library: Leader's Edition 5.0 | 1955 | Software |
+| 532431 | Just Enough Vocals The Learning Co | 3771 | Software |
 | 243257 | WINDOWS NT SERVER V4.0 RESOURCE | 3828 | Software |
 | 197564 | Baby'S Record Keeper And Memory Box | 1017 | Baby Product |
 | 224434 | SPELLING CORRECTOR | 39367 | CE |
@@ -190,16 +195,16 @@ LIMIT 10;
 -> Saida
 | product_id | asin | title | mean_rating |
 | ---------- | ---- | ----- | ----------- |
-| 135107 | B00000138D | Ancestral Voices | 5.0000000000000000 |
-| 100768 | 044667866X | The Curing Season | 5.0000000000000000 |
-| 119930 | B00005ABIT | Quiet Revolution | 5.0000000000000000 |
 | 195176 | 083880439X | Wordly Wise: Book 9 | 5.0000000000000000 |
-| 236493 | 1559702192 | La Salle : Explorer of the North American Frontier | 5.0000000000000000 |
-| 298929 | 0761919015 | Nonvoters : America's No-Shows | 5.0000000000000000 |
+| 100768 | 044667866X | The Curing Season | 5.0000000000000000 |
+| 14985 | 0525451358 | Winnie-The-Pooh's Teatime Cookbook | 5.0000000000000000 |
 | 227460 | B000005IC4 | Strauss: Die Fledermaus | 5.0000000000000000 |
-| 310118 | 0910791481 | How to Read Your Opponents Cards | 5.0000000000000000 |
+| 151520 | 0815746091 | The Black-White Test Score Gap | 5.0000000000000000 |
+| 119930 | B00005ABIT | Quiet Revolution | 5.0000000000000000 |
 | 80957 | 0791019187 | 101 Educational Conversations With Your Kindergartner-1St Grader (One Hundred One Educational Conversations to Have With Your Child) | 5.0000000000000000 |
-| 150069 | 1587680165 | The Little Tern: A Story of Insight | 5.0000000000000000 |
+| 236493 | 1559702192 | La Salle : Explorer of the North American Frontier | 5.0000000000000000 |
+| 64279 | B000000T7Z | Garrick Ohlsson - The Complete Chopin Piano Works Vol. 1 ~ Sonatas | 5.0000000000000000 |
+| 112785 | B00004Y9XC | The Best of Blind Lemon Jefferson [Yazoo] | 5.0000000000000000 |
 
 ## (f) Listar a 5 categorias de produto com a maior média de avaliações úteis positivas por produto.
 
@@ -232,27 +237,25 @@ FROM category_tree;
 | ----------- | ---- | --------- |
 | 290249 | General | 169660 |
 | 4233 | General | 6 |
-| 11156 | General | 11149 |
-| 11121 | Adolescent Psychology | 11119 |
+| 4233 | General | 6 |
 | 11141 | Psychology | 11132 |
+| 11121 | Adolescent Psychology | 11119 |
 | 169660 | Fitness | 404274 |
 | 6 | Cooking, Food & Wine | 1000 |
-| 11149 | Counseling | 11119 |
-| 11119 | Psychology & Counseling | 10 |
+| 6 | Cooking, Food & Wine | 1000 |
 | 11132 | Child Psychology | 11119 |
+| 11119 | Psychology & Counseling | 10 |
 | 404274 | Genres | 404272 |
 | 1000 | Subjects | 283155 |
+| 1000 | Subjects | 283155 |
 | 11119 | Psychology & Counseling | 10 |
 | 10 | Health, Mind & Body | 1000 |
-| 11119 | Psychology & Counseling | 10 |
 | 404272 | VHS | 139452 |
 | 283155 | Books | None |
-| 10 | Health, Mind & Body | 1000 |
-| 1000 | Subjects | 283155 |
-| 10 | Health, Mind & Body | 1000 |
-| 139452 | None | None |
-| 1000 | Subjects | 283155 |
 | 283155 | Books | None |
+| 10 | Health, Mind & Body | 1000 |
+| 1000 | Subjects | 283155 |
+| 139452 | None | None |
 | 1000 | Subjects | 283155 |
 | 283155 | Books | None |
 | 283155 | Books | None |
@@ -306,85 +309,93 @@ WHERE
 | 2 | A3UN6WX5RRO2AG  | Music |
 | 3 | A9Q28YTLYREO7   | Music |
 | 4 | A2U49LUUY4IKQQ  | Music |
-| 5 | A2NJO6YE954DBH  | Music |
-| 6 | A1GN8UJIZLCA59  | Music |
+| 5 | A1GN8UJIZLCA59  | Music |
+| 6 | A2NJO6YE954DBH  | Music |
 | 7 | A1J5KCZC8CMW9I  | Music |
 | 8 | A3MOF5KF93Q6WE  | Music |
 | 9 | AXFI7TAWD6H6X   | Music |
-| 10 | A2EENLV6OQ3DYM  | Music |
+| 10 | A38U2M9OAEJAXJ  | Music |
 | 1 | ATVPDKIKX0DER   | DVD |
 | 2 | A3UN6WX5RRO2AG  | DVD |
 | 3 | A2NJO6YE954DBH  | DVD |
 | 4 | AU8552YCOO5QX   | DVD |
 | 5 | A3P1A63Q8L32C5  | DVD |
 | 6 | A3LZGLA88K0LA0  | DVD |
-| 7 | A16CZRQL23NOIW  | DVD |
-| 8 | A82LIVYSX6WZ9   | DVD |
-| 9 | A152C8GYY25HAH  | DVD |
+| 7 | A82LIVYSX6WZ9   | DVD |
+| 8 | A152C8GYY25HAH  | DVD |
+| 9 | A16CZRQL23NOIW  | DVD |
 | 10 | A1CZICCYP2M5PX  | DVD |
-| 10 | A20EEWWSFMZ1PN  | DVD |
 | 1 | ATVPDKIKX0DER   | Video |
 | 2 | A3UN6WX5RRO2AG  | Video |
 | 3 | A2NJO6YE954DBH  | Video |
 | 4 | AU8552YCOO5QX   | Video |
-| 5 | A20EEWWSFMZ1PN  | Video |
 | 5 | A3P1A63Q8L32C5  | Video |
+| 6 | A20EEWWSFMZ1PN  | Video |
 | 7 | A16CZRQL23NOIW  | Video |
-| 8 | A2QRB6L1MCJ53G  | Video |
-| 9 | A3LZGLA88K0LA0  | Video |
+| 8 | A3LZGLA88K0LA0  | Video |
+| 9 | A2QRB6L1MCJ53G  | Video |
 | 10 | A152C8GYY25HAH  | Video |
 | 1 | AH4M07U4YC695   | Toy |
 | 1 | ATVPDKIKX0DER   | Toy |
 | 1 | A1SB7SB31ETYZH  | Toy |
 | 4 | A1QW8PHDJBH4IC  | Toy |
 | 4 | A1T3I4JU36IPM5  | Toy |
-| 4 | A2KTGCRR7UZRG7  | Toy |
-| 4 | A1ZO50XHPV0QPQ  | Toy |
 | 4 | A20R67CABJH79P  | Toy |
 | 4 | A20AL96IIDAEBU  | Toy |
-| 4 | A1A2RJXP6T26PD  | Toy |
-| 4 | A1ABBKXKUZF85X  | Toy |
-| 4 | A1BAZPQGXEVWRT  | Toy |
 | 4 | A1OA2ZW406NQXM  | Toy |
 | 4 | A1OSHA4U8RABFY  | Toy |
 | 4 | A1K9DVRKH6TZ1L  | Toy |
 | 4 | A1LEF9EM2DFDP2  | Toy |
 | 4 | A1ITRIM68VLZG3  | Toy |
-| 4 | A2BKFX67DBRYPA  | Toy |
-| 4 | A2PJ7WLZ38F47S  | Toy |
+| 4 | A1ZO50XHPV0QPQ  | Toy |
+| 4 | A1BAZPQGXEVWRT  | Toy |
+| 4 | A1DTOHMM2Y5KY0  | Toy |
 | 4 | A1FPVUL053AKXO  | Toy |
+| 4 | A1A2RJXP6T26PD  | Toy |
+| 4 | A1ABBKXKUZF85X  | Toy |
+| 4 | A2BKFX67DBRYPA  | Toy |
+| 4 | AU8PR9XJ17CCB   | Toy |
+| 4 | AXNOIMARQCT3M   | Toy |
+| 4 | AQJ2XVMHXGN9A   | Toy |
 | 4 | AH16IHWEMA61J   | Toy |
 | 4 | A34KPXP8CGUBO5  | Toy |
+| 4 | A3DWA4FRL41NQD  | Toy |
+| 4 | A2PJ7WLZ38F47S  | Toy |
+| 4 | A3O19HBWE10FFJ  | Toy |
+| 4 | A2KTGCRR7UZRG7  | Toy |
+| 4 | A2JTMTR2BZGLX   | Toy |
+| 4 | A3UN6WX5RRO2AG  | Toy |
+| 4 | A3S4OTTDBRQ6I1  | Toy |
 | 4 | A2V5INJFFRP7Z8  | Toy |
 | 4 | A2U1T90IOVPBAR  | Toy |
 | 4 | A2YO9AKVAHDR9I  | Toy |
-| 4 | A3S4OTTDBRQ6I1  | Toy |
-| 4 | A3DWA4FRL41NQD  | Toy |
-| 4 | A3UN6WX5RRO2AG  | Toy |
-| 4 | AQJ2XVMHXGN9A   | Toy |
-| 4 | A3O19HBWE10FFJ  | Toy |
-| 4 | AU8PR9XJ17CCB   | Toy |
-| 4 | AXNOIMARQCT3M   | Toy |
 | 1 | A3C811U31YG6FS  | Video Games |
 | 1 | A226EDS7WDF7S1  | Video Games |
 | 1 | A1M4NJYP0WNL8Q  | Video Games |
-| 1 | A1EIVBXG3RD150  | Software |
+| 1 | A1T6PXM2M3N84A  | Software |
 | 1 | A23DFB8IUTIZM0  | Software |
-| 1 | A2I0ZWBVR0575O  | Software |
-| 1 | A36T3O4TIC1YDQ  | Software |
+| 1 | A183K8JAQJW8LZ  | Software |
+| 1 | A1XQB8IU7S8WEU  | Software |
+| 1 | A1EIVBXG3RD150  | Software |
+| 1 | A1F8RIBFWRYM3Y  | Software |
+| 1 | A3D5ICIQ8STPCH  | Software |
 | 1 | A36NHJPD24UMGJ  | Software |
+| 1 | A36T3O4TIC1YDQ  | Software |
 | 1 | A37UFPGDSSMEV   | Software |
-| 1 | A37TFIP0OMKGMW  | Baby Product |
+| 1 | A39UZ9VVRJW4P8  | Software |
+| 1 | A2I0ZWBVR0575O  | Software |
+| 1 | AK9MWTH6LJF64   | Software |
 | 1 | AI9SB5VKUFXDC   | Baby Product |
 | 1 | A2LAH8VX720175  | Baby Product |
-| 1 | A13JU90C7AU3RT  | CE |
-| 1 | A1328SYT22GA4U  | CE |
+| 1 | A37TFIP0OMKGMW  | Baby Product |
 | 1 | A2IX9TMXDBUCYV  | CE |
-| 1 | A1SFX3CR838F36  | CE |
+| 1 | A1328SYT22GA4U  | CE |
+| 1 | A13JU90C7AU3RT  | CE |
 | 1 | A1J62O1S6QTHZJ  | CE |
-| 1 | A1W180Y9O1FALI  | Sports |
+| 1 | A1SFX3CR838F36  | CE |
 | 1 | A18ZVYTEDAOF9A  | Sports |
+| 1 | A1W180Y9O1FALI  | Sports |
+| 1 | AL62LOJKDES3M   | Sports |
 | 1 | A2RHSQZ7MAKKCO  | Sports |
 | 1 | A3O8EZOX2P399L  | Sports |
-| 1 | AL62LOJKDES3M   | Sports |
 

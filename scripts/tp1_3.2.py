@@ -19,9 +19,8 @@ class Config:
 
             if not os.path.exists(file):
                 self.Error = True
-                print(f"File {file} not exists")
+                raise ValueError(f"File {file} not exists")
     
-
 
 class Connect:
 
@@ -33,6 +32,16 @@ class Connect:
         user="postgres",
         password="db123")
 
+    def exec_many(self, query):
+        try:
+            with self.conn:
+                with self.conn.cursor() as curs:
+                    curs.executemany(*query)
+
+                    
+        except psycopg2.Error as e:
+            print(curs.query.decode("utf-8").strip())
+            print(f"ERROR: {e}")
         
     def exec_query(self, query: list, is_select: bool=False, debugger: bool = False) -> list:
         results = []
@@ -79,6 +88,8 @@ class Category:
 
                 self.category_id  = id
                 self.category_name = " ".join(result)
+                self.category_name = self.category_name[:50]
+
             else:
                 try:
                     self.category_id  = int(result[0])
@@ -215,7 +226,7 @@ def readFile(filename: str = None, callback: callable = None):
             if asin_match:
                 new_item.asin = asin_match[0]
             elif title_match:
-                new_item.title = title_match[0]
+                new_item.title = title_match[0][:300]
             elif group_match:
                 new_item.group = group_match[0]
             elif salesrank_match:
@@ -246,9 +257,11 @@ conf = Config()
 
 path_file = "./downloads/amazon-meta.txt"
 
-
 connect = Connect()
 
+"""
+Criando tabelas....
+"""
 
 groups = """
 CREATE TABLE IF NOT EXISTS groups (
@@ -321,63 +334,42 @@ for table in tables:
             
 group_set = set()
 
+products_values = []
+groups_values = []
+reviews_values = []
+category_values = []
+simis_values = []
+productscategories_values = []
+
 def addDatabase(item: Item):
     
     if not item.title:
         return
-    
-    group_insert_sql = """
-    INSERT INTO groups (name) VALUES (%s) ON CONFLICT (name) DO NOTHING
-    """
 
-    product_insert_sql = """
-    INSERT INTO products (product_id, asin, title, salesrank, total_reviews, group_id_fk)
-    VALUES (%s,%s,%s,%s,%s, (SELECT group_id FROM groups WHERE name = %s))
-    """
 
-    category_insert_sql = """
-    INSERT INTO category (category_id, name, parent_id)
-    VALUES (%s,%s,%s) ON CONFLICT (category_id) DO NOTHING
-    """
-
-    reviews_insert_sql = """
-    INSERT INTO reviews (date, rating, votes, helpful, customer_id, product_id_fk)
-    VALUES (%s,%s,%s,%s,%s,%s)
-    """
-
-    productscategories_insert_sql = """
-    INSERT INTO productscategories (product_id_fk, category_id_fk)
-    VALUES (%s, %s)
-    """
-
-    productproduct_insert_sql = """
-    INSERT INTO productproduct (product_id_fk, reference_asin)
-    VALUES (%s,  %s)
-    """
-    
     if item.group and item.group not in group_set:
         group_set.add(item.group)
-        connect.exec_query(query=[group_insert_sql, (item.group, )])
+        groups_values.append((item.group, ))
 
 
-    connect.exec_query(query=[product_insert_sql, (item.id, item.asin, item.title, item.salesrank, item.reviews[0], item.group)], debugger=True)
+    products_values.append((item.id, item.asin, item.title, item.salesrank, item.reviews[0], item.group))
 
     if item.reviews[1]:
 
         for rvw in item.list_reviews:
-            connect.exec_query(query=[reviews_insert_sql, (rvw.date,rvw.rating, rvw.votes, rvw.helpful, rvw.customer, item.id)])
-    
+            reviews_values.append((rvw.date,rvw.rating, rvw.votes, rvw.helpful, rvw.customer, item.id))
+       
     if item.categories:
         for category in item.categories:
 
             father:Category = category.pop(0)
-            connect.exec_query(query=[category_insert_sql, (father.category_id, father.category_name, None)])
-
+            category_values.append((father.category_id, father.category_name, None))
+          
             for child in category:
-                connect.exec_query(query=[category_insert_sql, (child.category_id, child.category_name, father.category_id)])
+                category_values.append((child.category_id, child.category_name, father.category_id))
                 father = child
             
-            connect.exec_query(query=[productscategories_insert_sql, (item.id, father.category_id)])
+            productscategories_values.append((item.id, father.category_id))
 
     if item.similar:
         list_sims = [ x.strip() for x in item.similar.split(" ") if len(x.split()) ]
@@ -385,15 +377,64 @@ def addDatabase(item: Item):
 
         if tol_simis:
             for simi in list_sims:
-                connect.exec_query(query=[productproduct_insert_sql, (item.id, simi)])        
+                simis_values.append((item.id, simi))  
 
-def insert_memory(item: Item):
-    if not item.title:
-        return
-    
-    addDatabase(item)
+"""
+Queries de inserção
+"""
+
+group_insert_sql = """
+INSERT INTO groups (name) VALUES (%s) ON CONFLICT (name) DO NOTHING
+"""
+
+product_insert_sql = """
+INSERT INTO products (product_id, asin, title, salesrank, total_reviews, group_id_fk)
+VALUES (%s,%s,%s,%s,%s, (SELECT group_id FROM groups WHERE name = %s))
+"""
+
+category_insert_sql = """
+INSERT INTO category (category_id, name, parent_id)
+VALUES (%s,%s,%s) ON CONFLICT (category_id) DO NOTHING
+"""
+
+reviews_insert_sql = """
+INSERT INTO reviews (date, rating, votes, helpful, customer_id, product_id_fk)
+VALUES (%s,%s,%s,%s,%s,%s)
+"""
+
+productscategories_insert_sql = """
+INSERT INTO productscategories (product_id_fk, category_id_fk)
+VALUES (%s, %s)
+"""
+
+productproduct_insert_sql = """
+INSERT INTO productproduct (product_id_fk, reference_asin)
+VALUES (%s,  %s)
+"""
+
 
 if not conf.Error:
-    readFile(filename=path_file, callback=insert_memory)
+    """
+    Lendo o arquivo
+    """
+    readFile(filename=path_file, callback=addDatabase)
+
+    print(f"Inserindo: {len(groups_values)} grupos")
+    connect.exec_many([group_insert_sql, groups_values])
+
+    print(f"Inserindo: {len(products_values)} produtos")
+    connect.exec_many([product_insert_sql, products_values])
+    print(f"Inserindo: {len(reviews_values)} reviews")
+    connect.exec_many([reviews_insert_sql, reviews_values])
+
+    print(f"Inserindo: {len(category_values)} categorias")
+    connect.exec_many([category_insert_sql, category_values])
+
+    print(f"Inserindo: {len(productscategories_values)} productCategories")
+    connect.exec_many([productscategories_insert_sql, productscategories_values])
+
+    print(f"Inserindo: {len(simis_values)} similares")
+    connect.exec_many([productproduct_insert_sql, simis_values])
+
 
 connect.close()
